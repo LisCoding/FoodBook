@@ -12,10 +12,10 @@ class User < ApplicationRecord
   end
 
   def find_by_credentials(username, password)
-    @user = User.find_by_username(username)
+    user = User.find_by_username(username)
 
-    return nil if @user.nil?
-    user.is_password?(password) ? @user : nil
+    return nil if user.nil?
+    user.is_password?(password) ? user : nil
   end
 
   def reset_session_token!
@@ -23,7 +23,6 @@ class User < ApplicationRecord
     self.save!
     self.session_token
   end
-
 
   def password=(password)
     @password = password
@@ -35,11 +34,8 @@ class User < ApplicationRecord
   end
 
   private
-
   def ensure_session_token
     self.session_token ||= User.generate_session_token
   end
-
-
 
 end
